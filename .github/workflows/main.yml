@@ -16,10 +16,18 @@ jobs:
         with:
           fetch-depth: 0  # Fetch all history for accurate syncing
 
-      # Step 2: Add Hugging Face remote
-      - name: Add Hugging Face remote
-        run: git remote add space https://huggingface.co/spaces/gfeng321/demo
+      # Step 2: Set up SSH key
+      - name: Set up SSH key
+        run: |
+          echo "${{ secrets.HUGGINGFACE_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          eval "$(ssh-agent -s)"
+          ssh-add ~/.ssh/id_rsa
 
-      # Step 3: Push to Hugging Face Spaces
+      # Step 3: Add Hugging Face remote
+      - name: Add Hugging Face remote
+        run: git remote add space git@huggingface.co:spaces/gfeng321/demo.git
+
+      # Step 4: Push to Hugging Face Spaces
       - name: Push to Hugging Face Spaces
         run: git push --force space main
