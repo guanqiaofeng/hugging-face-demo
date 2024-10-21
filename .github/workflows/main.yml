@@ -19,6 +19,9 @@ jobs:
       # Step 2: Add Hugging Face remote
       - name: Add Hugging Face remote
         run: git remote add space https://huggingface.co/spaces/gfeng321/demo
+      # Step 2.1: Print the remote URL for debugging
+      - name: Check remote URL
+        run: git remote -v
 
       # Step 3: Push to Hugging Face Spaces
       - name: Push to Hugging Face Spaces
